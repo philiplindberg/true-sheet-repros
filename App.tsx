@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { FlingScreen } from './src/fling'
 import { KeepDetentScreen } from './src/keep-detent'
 import { LayoutScreen } from './src/layout'
+import { StackedScreen } from './src/stacked'
 
 const SCREENS = [
   {
@@ -40,6 +41,12 @@ const SCREENS = [
     title: '#998 Changing detents',
     platforms: 'iOS and Android',
     Screen: KeepDetentScreen,
+  },
+  {
+    key: 'stacked',
+    title: 'Stacked sheets',
+    platforms: 'iOS',
+    Screen: StackedScreen,
   },
 ] as const
 

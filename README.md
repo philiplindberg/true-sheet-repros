@@ -1,10 +1,11 @@
 # TrueSheet 4.0.0 repros
 
-Minimal reproductions for three issues on [`@lodev09/react-native-true-sheet`](https://github.com/lodev09/react-native-true-sheet) 4.0.0, one screen each:
+Minimal reproductions for four issues on [`@lodev09/react-native-true-sheet`](https://github.com/lodev09/react-native-true-sheet) 4.0.0, one screen each:
 
 - [#995](https://github.com/lodev09/react-native-true-sheet/issues/995): [Android] a downward fling between detents settles back unless released past halfway.
 - [#997](https://github.com/lodev09/react-native-true-sheet/issues/997): [Android] dragging or settling a sheet lays out its React content on every frame.
 - [#998](https://github.com/lodev09/react-native-true-sheet/issues/998): changing detents keeps the detent index, not the detent, so the sheet jumps.
+- Stacked sheets: [iOS] a sheet whose content resizes just after it presents over another sheet leaves that sheet missing for several frames when it's dismissed soon after.
 
 Expo SDK 58, React Native 0.88, new architecture, `@lodev09/react-native-true-sheet@4.0.0` with no patches. The app is Expo's blank TypeScript template plus TrueSheet; nothing else is added.
 
@@ -100,3 +101,14 @@ Screen "#998 Changing detents". The sheet presents at `0.45`, index 0 of `[0.45,
 2. Tap "Resize to 0.45" (index 1), then "Remove peek". The detents are `[0.45, 1]` again. Expected: the sheet stays at `0.45`. Actual: it keeps index 1 and rises to `1`.
 
 Seen on a Pixel 8 (Android 17) and the iPhone 18 Pro simulator (iOS 27). Neither move fires `onDetentChange`, so the readout and the log go on naming the old index.
+
+## Stacked sheets: the sheet underneath goes missing (iOS)
+
+Screen "Stacked sheets". The parent sheet rests at `'auto'` of `['auto', 1]`, `dismissible={false}` and `dimmed={false}`, and stays presented. "Open the child sheet" presents a child with `detents={[1]}` over it. "Child content grows once presented" adds a 40 pt view to the child's content in `onDidPresent`. "Cycle 10 times" presents the child and dismisses it 250 ms after `onDidPresent`, ten times.
+
+1. Turn on "Child content grows once presented".
+2. Tap "Cycle 10 times".
+
+Expected: the parent is there as soon as the child slides off it. Actual: once the child is down, the parent is missing for several frames each time, then reappears all at once. With the switch off, it's there the moment the child uncovers it.
+
+Seen in the iPhone 18 Pro simulator (iOS 27) on 4.0.0 and on 4.0.1. In a recording of 4.0.1, the parent's button stayed hidden 1.02–1.03 s per cycle with the switch on and 0.96–0.98 s with it off, over ten cycles each.
