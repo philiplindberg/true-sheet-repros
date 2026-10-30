@@ -1,15 +1,18 @@
 {
   "expo": {
-    "name": "true-sheet-repros",
+    "name": "TrueSheet repros",
     "slug": "true-sheet-repros",
+    "scheme": "truesheetrepros",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.philiplindberg.truesheetrepros"
     },
     "android": {
+      "package": "com.philiplindberg.truesheetrepros",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
+    "@lodev09/react-native-true-sheet": "4.0.0",
     "expo": "~58.0.21",
     "expo-status-bar": "~58.0.4",
     "react": "19.3.0",
@@ -13,10 +14,11 @@
     "typescript": "~6.0.3"
   },
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "start": "expo start --port 8082",
+    "android": "expo run:android --port 8082",
+    "android:release": "expo run:android --variant release --no-bundler",
+    "ios": "expo run:ios --port 8082",
+    "check": "tsc --noEmit"
   },
   "private": true
 }
